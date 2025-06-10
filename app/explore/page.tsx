@@ -49,7 +49,9 @@ export default function ExplorePage() {
 
       <ExploreFilters show={showFilters} />
 
-      <ExploreCardGrid />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ExploreCardGrid />
+      </Suspense>
     </Container>
   );
 }
