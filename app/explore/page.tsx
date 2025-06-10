@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import ExploreFilters from "@/components/ExploreFilters";
 import ExploreCardGrid from "@/components/ExploreCardGrid";

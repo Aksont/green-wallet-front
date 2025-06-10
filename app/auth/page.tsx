@@ -51,7 +51,7 @@ export default function AuthPage() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("${process.env.NEXT_PUBLIC_BACKEND_API}/users", {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_API}/users`, {
         name: registerName,
         email: registerEmail,
         password: registerPassword,
