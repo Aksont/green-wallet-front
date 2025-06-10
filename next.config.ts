@@ -9,6 +9,8 @@ const nextConfig = {
   // You can add more Next.js config options here
 };
 
+// comment
+
 export default withPWA({
   ...nextConfig,
   dest: "public", // destination directory for the PWA files
