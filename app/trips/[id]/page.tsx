@@ -14,14 +14,14 @@ import {
   Box,
 } from "@mui/material";
 import axios from "axios";
-import TripCard from "@/components/TripCard";
+import TripCard, { Trip } from "@/components/TripCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ProofModal from "@/components/ProofModal";
 import CompensationSuggestionsModal from "@/components/CompensationSuggestionsModal";
 
 export default function TripDetailsPage() {
   const { id } = useParams();
-  const [trip, setTrip] = useState(null);
+  const [trip, setTrip] = useState<Trip | null>(null);
   const [loading, setLoading] = useState(true);
 
   const [proof, setProof] = useState(null);
@@ -126,10 +126,15 @@ export default function TripDetailsPage() {
           open={openSuggestionsModal}
           onClose={() => setOpenSuggestionsModal(false)}
           suggestions={suggestions}
-          onConfirm={(type, project, value) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onConfirm={(type: any, project: any, value: any) => {
             // Handle confirmation logic here (API call, state update, etc.)
             console.log("Confirmed", type, project, value);
             setOpenSuggestionsModal(false);
+          }}
+          onCompensate={() => {
+            // implement the logic here or pass a real handler
+            console.log("Compensate triggered");
           }}
           tripTotalCo2={trip.totalCo2emissionInKg}
           tripId={trip.id}

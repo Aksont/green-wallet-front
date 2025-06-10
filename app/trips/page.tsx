@@ -20,6 +20,7 @@ import TripCard from "@/components/TripCard";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { requireAuth } from "@/utils/auth";
+import { Location } from "@/types/location.interface";
 
 interface Trip {
   id: string;
@@ -28,6 +29,12 @@ interface Trip {
   to: Location;
   startDate: Date;
   endDate: Date;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sequences: any[]; // Replace `any` with actual sequence type if available
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  returnSequences: any[];
+  totalDistanceInKm: number;
+  totalCo2emissionInKg: number;
 }
 
 export default function TripsPage() {

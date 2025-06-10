@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { ProofOfCompensation } from "@/types/proof-of-compensation.interface";
 import { useMemo } from "react";
-import Carousel from "react-material-ui-carousel";
 import { Swiper, SwiperSlide } from "swiper/react"; // ✅ React-compatible
 import { Navigation, A11y } from "swiper/modules"; // Optional modules
 import { generateTripPDF } from "@/utils/pdf-proof";
@@ -30,7 +29,6 @@ export default function ProofModal({
   onClose,
   proof,
   userProfileImgUrl,
-  tripName,
 }: ProofModalProps) {
   // if (!proof) return;
 

@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Grid, { GridProps } from "@mui/material/Grid";
-import ExploreCard from "@/components/ExploreCard";
+import ExploreCard, { ExploreCardProps } from "@/components/ExploreCard";
 import ExploreDetailModal from "@/components/ExploreDetailModal";
 import { Box } from "@mui/material";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
 export default function ExploreCardGrid() {
-  const [cards, setCards] = useState([]);
-  const [selected, setSelected] = useState<(typeof cards)[0] | null>(null);
+  const [cards, setCards] = useState<ExploreCardProps[]>([]);
+  const [selected, setSelected] = useState<ExploreCardProps | null>(null);
+
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
 

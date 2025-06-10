@@ -34,13 +34,14 @@ interface CompensationSuggestionsModalProps {
   ) => void;
   tripTotalCo2: number;
   tripId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onConfirm: (type: any, project: any, value: any) => void;
 }
 
 export default function CompensationSuggestionsModal({
   open,
   onClose,
   suggestions,
-  onCompensate,
   tripTotalCo2,
   tripId,
 }: CompensationSuggestionsModalProps) {
@@ -90,7 +91,7 @@ export default function CompensationSuggestionsModal({
       });
       try {
         const res = await axios.post<CompensationInfo>(
-          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/donate`,
+          `${process.env.BACKEND_API}/compensation/donate`,
           {
             userId: localStorage.getItem("userId"),
             projectId: selectedProject.id,

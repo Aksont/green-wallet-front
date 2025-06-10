@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Typography, useTheme } from "@mui/material";
 
-interface ExploreCardProps {
+export interface ExploreCardProps {
   title: string;
   type: string;
   cause: string;

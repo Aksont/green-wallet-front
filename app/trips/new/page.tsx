@@ -128,7 +128,7 @@ export default function NewTripPage() {
     list: any[],
     index: number,
     field: string,
-    value: string
+    value: string | number
   ) => {
     const updated = [...list];
     updated[index] = { ...updated[index], [field]: value };
