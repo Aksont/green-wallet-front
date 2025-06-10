@@ -91,7 +91,7 @@ export default function CompensationSuggestionsModal({
       });
       try {
         const res = await axios.post<CompensationInfo>(
-          `${process.env.BACKEND_API}/compensation/donate`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/donate`,
           {
             userId: localStorage.getItem("userId"),
             projectId: selectedProject.id,
