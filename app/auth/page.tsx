@@ -51,7 +51,7 @@ export default function AuthPage() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://localhost:3001/users", {
+      await axios.post("${process.env.NEXT_PUBLIC_BACKEND_API}/users", {
         name: registerName,
         email: registerEmail,
         password: registerPassword,
@@ -72,10 +72,13 @@ export default function AuthPage() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3001/users/login", {
-        email: loginEmail,
-        password: loginPassword,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/users/login`,
+        {
+          email: loginEmail,
+          password: loginPassword,
+        }
+      );
       localStorage.setItem("userId", res.data.id);
       router.push("/profile");
       setLoginEmail("");

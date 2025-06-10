@@ -44,7 +44,7 @@ export default function TripsPage() {
     async function fetchProjects() {
       try {
         const res = await axios.get(
-          "http://localhost:3001/trips/for-user/" +
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/for-user/` +
             localStorage.getItem("userId")
         );
         console.log("results: ", res.data);

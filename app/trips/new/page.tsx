@@ -253,7 +253,10 @@ export default function NewTripPage() {
     console.log("Trip to be created:", newTrip);
 
     try {
-      const response = await axios.post("http://localhost:3001/trips", newTrip);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/trips`,
+        newTrip
+      );
       console.log("Trip successfully created:", response.data);
       resetTripForm();
       window.location.href = `/trips/${response.data.id}`;

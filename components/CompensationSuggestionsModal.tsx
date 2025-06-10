@@ -90,7 +90,7 @@ export default function CompensationSuggestionsModal({
       });
       try {
         const res = await axios.post<CompensationInfo>(
-          `http://localhost:3001/compensation/donate`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/donate`,
           {
             userId: localStorage.getItem("userId"),
             projectId: selectedProject.id,

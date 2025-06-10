@@ -10,7 +10,9 @@ export async function generateTripPDF(
 ): Promise<void> {
   let trip: Trip;
   try {
-    const res = await axios.get("http://localhost:3001/trips/" + proof.tripId);
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/` + proof.tripId
+    );
     trip = res.data;
   } catch (error) {
     console.error("Failed to fetch projects:", error);

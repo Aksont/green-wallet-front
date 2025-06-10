@@ -28,7 +28,9 @@ export default function ExploreCardGrid() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const res = await axios.get("http://localhost:3001/projects"); // Replace with your real backend URL
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/projects`
+        ); // Replace with your real backend URL
         setCards(res.data);
       } catch (error) {
         console.error("Failed to fetch projects:", error);

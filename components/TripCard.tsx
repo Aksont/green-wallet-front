@@ -99,7 +99,7 @@ export default function TripCard({
     async function fetchIsCompensated(id: string) {
       try {
         const res = await axios.get(
-          `http://localhost:3001/compensation/is-compensated/${id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/is-compensated/${id}`
         );
         setIsCompensated(res.data);
       } catch (error) {
@@ -114,7 +114,7 @@ export default function TripCard({
   //   if (proof) return;
   //   try {
   //     const res = await axios.get(
-  //       `http://localhost:3001/compensation/proofs/${id}`
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/proofs/${id}`
   //     );
   //     setProof(res.data);
   //     console.log(res.data);
@@ -127,7 +127,7 @@ export default function TripCard({
   //   if (suggestions) return;
   //   try {
   //     const res = await axios.get(
-  //       `http://localhost:3001/compensation/suggestions/${id}`
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/suggestions/${id}`
   //     );
   //     setProof(res.data);
   //     console.log(res.data);

@@ -33,7 +33,9 @@ export default function TripDetailsPage() {
   useEffect(() => {
     async function fetchTrip() {
       try {
-        const res = await axios.get("http://localhost:3001/trips/" + id);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/` + id
+        );
         setTrip(res.data);
         setLoading(false);
       } catch (error) {
@@ -54,7 +56,7 @@ export default function TripDetailsPage() {
 
     try {
       const res = await axios.get(
-        `http://localhost:3001/compensation/proofs/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/proofs/${id}`
       );
       setProof(res.data);
       console.log(res.data);
@@ -71,7 +73,7 @@ export default function TripDetailsPage() {
     }
     try {
       const res = await axios.get(
-        `http://localhost:3001/compensation/suggestions/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/suggestions/${id}`
       );
       setSuggestions(res.data);
       setOpenSuggestionsModal(true);

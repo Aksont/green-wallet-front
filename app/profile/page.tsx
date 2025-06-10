@@ -112,7 +112,8 @@ export default function UserProfilePage() {
     async function fetchUser() {
       try {
         const res = await axios.get(
-          "http://localhost:3001/users/" + localStorage.getItem("userId")
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/users/` +
+            localStorage.getItem("userId")
         );
         console.log(res.data);
         setUser(res.data);
@@ -124,7 +125,7 @@ export default function UserProfilePage() {
     async function fetchUserStats() {
       try {
         const res = await axios.get(
-          "http://localhost:3001/compensation/stats/" +
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/stats/` +
             localStorage.getItem("userId")
         );
         console.log(res.data);
@@ -142,7 +143,7 @@ export default function UserProfilePage() {
     async function fetchProofs() {
       try {
         const res = await axios.get(
-          "http://localhost:3001/compensation/user-proofs/" +
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/user-proofs/` +
             localStorage.getItem("userId")
         );
         setProofs(res.data);
