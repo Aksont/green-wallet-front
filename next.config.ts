@@ -1,12 +1,13 @@
 // import type { NextConfig } from "next";
+import { NextConfig } from "next";
 import withPWA from "next-pwa";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
+  // ✅ place eslint setting here at top level
   eslint: {
-    ignoreDuringBuilds: true, // ✅ Proper place
+    ignoreDuringBuilds: true,
   },
-  // You can add more Next.js config options here
+  // other global settings if needed
 };
 
 // comment
