@@ -30,6 +30,13 @@ export default function TripDetailsPage() {
   const [suggestions, setSuggestions] = useState(null);
   const [openSuggestionsModal, setOpenSuggestionsModal] = useState(false);
 
+  const [userId, setUserId] = useState<string>();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    setUserId(userId ? userId : "");
+  }, []);
+
   useEffect(() => {
     async function fetchTrip() {
       try {
@@ -87,7 +94,7 @@ export default function TripDetailsPage() {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      {localStorage.getItem("userId") && (
+      {userId && (
         <IconButton
           component={Link}
           href="/trips"

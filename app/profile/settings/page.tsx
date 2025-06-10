@@ -6,14 +6,16 @@ import ThemeModeSwitch from "@/components/ThemeModeSwitch";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { requireAuth } from "@/utils/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
   const { mode, toggleMode } = useThemeContext();
-  const userId = localStorage.getItem("userId");
+  const [userId, setUserId] = useState<string>();
 
   useEffect(() => {
     requireAuth();
+    const userId = localStorage.getItem("userId");
+    setUserId(userId ? userId : "");
   }, []);
 
   return (
