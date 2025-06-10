@@ -1,0 +1,27 @@
+{
+  "name": "Digital Wallet for Green Tourism",
+  "short_name": "DWGT",
+  "theme_color": "#00ff00",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/DWGT_logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/DWGT_logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/DWGT_logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
