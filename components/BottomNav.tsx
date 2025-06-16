@@ -21,11 +21,11 @@ const BottomNav = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (pathname?.startsWith("/profile")) setValue(4);
-    else if (pathname?.startsWith("/learn")) setValue(0);
-    else if (pathname?.startsWith("/explore")) setValue(1);
-    else if (pathname?.startsWith("/trips")) setValue(2);
-    else if (pathname?.startsWith("/market")) setValue(3);
+    if (pathname?.startsWith("/profile")) setValue(2);
+    // else if (pathname?.startsWith("/learn")) setValue(0);
+    else if (pathname?.startsWith("/explore")) setValue(0);
+    else if (pathname?.startsWith("/trips")) setValue(1);
+    // else if (pathname?.startsWith("/market")) setValue(3);
   }, [pathname]);
 
   const handleChange = (_: unknown, newValue: number) => {
