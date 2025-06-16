@@ -7,11 +7,11 @@ import {
   Box,
   Paper,
 } from "@mui/material";
-import SchoolIcon from "@mui/icons-material/School";
+// import SchoolIcon from "@mui/icons-material/School";
 import ExploreIcon from "@mui/icons-material/Explore";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import PersonIcon from "@mui/icons-material/Person";
-import StorefrontIcon from "@mui/icons-material/Storefront";
+// import StorefrontIcon from "@mui/icons-material/Storefront";
 import { useState, useEffect } from "react";
 
 const BottomNav = () => {
@@ -35,10 +35,10 @@ const BottomNav = () => {
   };
 
   const tabs = [
-    { label: "Learn", icon: <SchoolIcon /> },
+    // { label: "Learn", icon: <SchoolIcon /> },
     { label: "Explore", icon: <ExploreIcon /> },
     { label: "Trips", icon: <LuggageIcon /> },
-    { label: "Market", icon: <StorefrontIcon /> },
+    // { label: "Market", icon: <StorefrontIcon /> },
     { label: "Profile", icon: <PersonIcon /> },
   ];
 
