@@ -30,7 +30,8 @@ const BottomNav = () => {
 
   const handleChange = (_: unknown, newValue: number) => {
     setValue(newValue);
-    const routes = ["/learn", "/explore", "/trips", "/market", "/profile"];
+    // const routes = ["/learn", "/explore", "/trips", "/market", "/profile"];
+    const routes = ["/explore", "/trips", "/profile"];
     router.push(routes[newValue]);
   };
 
