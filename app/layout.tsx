@@ -43,15 +43,20 @@ import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: "Digital Wallet for Green Travel",
-  description: "DWGT helps tourists make sustainable trips.",
+  description: "Travel greener. Give back smarter. Prove it effortlessly.",
   generator: "Next.js",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/DWGT_icon_no_bg.png",
+    apple: "/DWGT_icon_no_bg.png",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  maximumScale: 1,
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

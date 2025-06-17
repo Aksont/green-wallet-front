@@ -111,7 +111,7 @@ export default function AuthPage() {
       </Button>
 
       <Typography variant="h4" align="center" fontWeight={600} gutterBottom>
-        Join the community of Green Tourists
+        Join the community of Green Travelers
       </Typography>
 
       <Tabs

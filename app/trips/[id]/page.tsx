@@ -19,7 +19,7 @@ import TripCard, { Trip } from "@/components/TripCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ProofModal from "@/components/ProofModal";
 import CompensationSuggestionsModal from "@/components/CompensationSuggestionsModal";
-import { isLogged, isRequiredUsedLogged } from "@/utils/auth";
+import { isRequiredUsedLogged } from "@/utils/auth";
 
 export default function TripDetailsPage() {
   const { id } = useParams();
