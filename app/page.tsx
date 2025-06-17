@@ -32,7 +32,7 @@ export default function Home() {
         gutterBottom
         sx={{ fontWeight: 700, color: "text.primary" }}
       >
-        Digital Wallet for Green Tourism
+        Digital Wallet for Green Travel
       </Typography>
 
       <Typography
@@ -42,10 +42,10 @@ export default function Home() {
           color: "text.secondary",
           mb: 4,
           fontSize: "1.1rem",
+          whiteSpace: "pre-line",
         }}
       >
-        Empowering sustainable tourism through smart, digital solutions for
-        tickets, rewards, and carbon impact tracking — one trip at a time.
+        {`Travel greener. Give back smarter. \nProve it effortlessly.`}
       </Typography>
 
       <Button
@@ -67,6 +67,18 @@ export default function Home() {
       >
         Become a Green Traveler
       </Button>
+
+      <Typography
+        variant="body2"
+        sx={{
+          maxWidth: 500,
+          color: "text.secondary",
+          mt: 2,
+          fontStyle: "italic",
+        }}
+      >
+        Because sustainability shouldn`t end where the road begins.
+      </Typography>
     </Container>
   );
 }

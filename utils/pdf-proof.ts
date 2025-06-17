@@ -9,6 +9,8 @@ export async function generateTripPDF(
   proof: ProofOfCompensation
 ): Promise<void> {
   let trip: Trip;
+  let userName: string;
+
   try {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/` + proof.tripId
@@ -16,6 +18,16 @@ export async function generateTripPDF(
     trip = res.data;
   } catch (error) {
     console.error("Failed to fetch projects:", error);
+    return;
+  }
+
+  try {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/user-name/` + trip.id
+    );
+    userName = res.data;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
     return;
   }
 
@@ -27,17 +39,27 @@ export async function generateTripPDF(
   doc.setFontSize(18);
   doc.text(trip.title, 14, 20);
 
+  const formatDate = (dateStr: Date) =>
+    new Date(dateStr).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+  const start = formatDate(trip.startDate);
+  const end = formatDate(trip.endDate);
+
   // Basic Trip Info
   doc.setFontSize(12);
   doc.text(`From: ${trip.from.name}, ${trip.from.country}`, 14, 30);
   doc.text(`To: ${trip.to.name}, ${trip.to.country}`, 14, 36);
-  doc.text(`Dates: ${trip.startDate} – ${trip.endDate}`, 14, 42);
+  doc.text(`Dates: ${start} - ${end}`, 14, 42);
   doc.text(`Distance: ${trip.totalDistanceInKm.toFixed(1)} km`, 14, 48);
-  doc.text(`CO₂ Emissions: ${trip.totalCo2emissionInKg.toFixed(2)} kg`, 14, 54);
+  doc.text(`CO2 Emissions: ${trip.totalCo2emissionInKg.toFixed(2)} kg`, 14, 54);
 
   // Proof of Compensation
   doc.setFontSize(14);
-  doc.text("Proof of Compensation", 14, 70);
+  doc.text(`${userName}'s Proof of Compensation`, 14, 70);
   doc.setFontSize(12);
   doc.text(`Trees Donated: ${proof.trees}`, 14, 78);
   doc.text(`Volunteer Hours: ${proof.volunteerHours}`, 14, 84);
@@ -49,7 +71,7 @@ export async function generateTripPDF(
   // Compensation Details Table
   autoTable(doc, {
     startY: 105,
-    head: [["Type", "CO₂ (kg)", "Trees/Hours", "Amount"]],
+    head: [["Type", "CO2 (kg)", "Trees/Hours", "Price"]],
     body: [...proof.donationInfos, ...proof.volunteeringInfos].map((info) => {
       const type = info.donation ? "Donation" : "Volunteering";
       const co2 = info.compensatedCo2.toFixed(2);

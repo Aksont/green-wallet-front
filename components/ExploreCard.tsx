@@ -15,8 +15,6 @@ export default function ExploreCard({
   title,
   type,
   cause,
-  distance,
-  participation,
   tags,
   image,
   onClick,
@@ -56,12 +54,12 @@ export default function ExploreCard({
       <Typography variant="body2" color="text.secondary">
         Cause: {cause}
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      {/* <Typography variant="body2" color="text.secondary">
         Distance: {distance} km
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
+      </Typography> */}
+      {/* <Typography variant="body2" color="text.secondary">
         Participation: {participation}
-      </Typography>
+      </Typography> */}
 
       <Box sx={{ mt: 1, display: "flex", gap: 1, flexWrap: "wrap" }}>
         {tags.slice(0, 5).map((tag) => (

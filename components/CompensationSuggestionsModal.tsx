@@ -18,6 +18,7 @@ import {
   Tabs,
   Tab,
   Slider,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
 import { CompensationInfo } from "@/types/proof-of-compensation.interface";
@@ -114,6 +115,7 @@ export default function CompensationSuggestionsModal({
   };
 
   const tabs = ["Donation", "Volunteer", "Challenge"];
+  const theme = useTheme();
 
   const renderProject = (
     project: Project,
@@ -125,7 +127,29 @@ export default function CompensationSuggestionsModal({
       border={"1px solid #ccc"}
       borderRadius={2}
       mb={2}
+      sx={{
+        border: "1px solid",
+        borderColor: "divider",
+        borderRadius: 2,
+        p: 2,
+        height: "100%",
+        backgroundColor: theme.palette.background.paper,
+      }}
     >
+      <Box
+        component="img"
+        src={project.image}
+        alt={project.title}
+        sx={{
+          width: "100%",
+          height: 175,
+          objectFit: "cover",
+          borderRadius: 2,
+          mb: 2,
+          boxShadow: 2,
+          transition: "transform 0.3s ease, filter 0.3s ease",
+        }}
+      />
       <Typography variant="h6">{project.title}</Typography>
       <Typography variant="body2" color="text.secondary">
         {project.description}

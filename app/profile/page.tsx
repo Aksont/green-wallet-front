@@ -25,6 +25,7 @@ import axios from "axios";
 import NextLink from "next/link";
 import { Link as MuiLink } from "@mui/material";
 import { requireAuth } from "@/utils/auth";
+import { Trip } from "@/types/trip.interface";
 
 export interface ProofOfCompensation {
   tripId: string;
@@ -61,6 +62,7 @@ export default function UserProfilePage() {
   const [stats, setStats] = useState<
     { label: string; value: number | string }[]
   >([]);
+  const [proofsTrips, setProofsTrips] = useState<Trip[]>([]);
 
   useEffect(() => {
     requireAuth();
@@ -68,9 +70,6 @@ export default function UserProfilePage() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleStats(stats: any) {
-    console.log("stats");
-    console.log(stats);
-    console.log(stats.trees);
     const co2Percent =
       stats.totalCo2 !== 0
         ? `(${((stats.compensatedCo2 / stats.totalCo2) * 100).toFixed(2)}%)`
@@ -79,9 +78,6 @@ export default function UserProfilePage() {
       stats.totalTrips !== 0
         ? `(${((stats.compensatedTrips / stats.totalTrips) * 100).toFixed(2)}%)`
         : "";
-
-    console.log(co2Percent);
-    console.log(tripsPercent);
 
     const _stats = [
       { label: "Trees", value: stats.trees },
@@ -103,8 +99,6 @@ export default function UserProfilePage() {
       },
     ];
 
-    console.log(_stats);
-    console.log(_stats.length);
     setStats(_stats);
   }
 
@@ -115,7 +109,6 @@ export default function UserProfilePage() {
           `${process.env.NEXT_PUBLIC_BACKEND_API}/users/` +
             localStorage.getItem("userId")
         );
-        console.log(res.data);
         setUser(res.data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -128,7 +121,6 @@ export default function UserProfilePage() {
           `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/stats/` +
             localStorage.getItem("userId")
         );
-        console.log(res.data);
         handleStats(res.data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
@@ -155,7 +147,26 @@ export default function UserProfilePage() {
     fetchProofs();
   }, []);
 
+  async function fetchProofsTrips() {
+    if (proofsTrips.length !== 0) return;
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/trips/multiple`,
+        { ids: proofs.map((p) => p.tripId) }
+      );
+      setProofsTrips(res.data);
+    } catch (error) {
+      console.error("Failed to fetch trips for proofs:", error);
+    }
+  }
+
+  function handleShowProofs(): void {
+    setOpenModal(true);
+    fetchProofsTrips();
+  }
+
   if (!user) return;
+
   return (
     <Box sx={{ position: "relative" }}>
       <Button
@@ -247,7 +258,7 @@ export default function UserProfilePage() {
           <Button
             variant="contained"
             startIcon={<FactCheckIcon />}
-            onClick={() => setOpenModal(true)}
+            onClick={() => handleShowProofs()}
           >
             Show Proofs of Compensation
           </Button>
@@ -279,7 +290,10 @@ export default function UserProfilePage() {
                         },
                       }}
                     >
-                      Trip ID: {proof.tripId}
+                      {proofsTrips &&
+                      proofsTrips.find((t) => t.id === proof.tripId)
+                        ? proofsTrips.find((t) => t.id === proof.tripId)?.title
+                        : `Trip ID: ${proof.tripId}`}
                     </MuiLink>
                   </NextLink>
                   <Typography variant="body1">

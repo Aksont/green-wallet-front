@@ -12,12 +12,14 @@ import {
   Link,
   Container,
   Box,
+  Button,
 } from "@mui/material";
 import axios from "axios";
 import TripCard, { Trip } from "@/components/TripCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ProofModal from "@/components/ProofModal";
 import CompensationSuggestionsModal from "@/components/CompensationSuggestionsModal";
+import { isLogged, isRequiredUsedLogged } from "@/utils/auth";
 
 export default function TripDetailsPage() {
   const { id } = useParams();
@@ -31,10 +33,18 @@ export default function TripDetailsPage() {
   const [openSuggestionsModal, setOpenSuggestionsModal] = useState(false);
 
   const [userId, setUserId] = useState<string>();
+  const [isCompensated, setIsCompensated] = useState(false);
+
+  const [isUserLogged, setIsUserLogged] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUserId(userId ? userId : "");
+
+    if (userId) {
+      const isIn = isRequiredUsedLogged(userId);
+      setIsUserLogged(isIn);
+    }
   }, []);
 
   useEffect(() => {
@@ -52,6 +62,22 @@ export default function TripDetailsPage() {
 
     fetchTrip();
   }, [id]);
+
+  useEffect(() => {
+    async function fetchIsCompensated() {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/is-compensated/${trip?.id}`
+        );
+        setIsCompensated(res.data);
+      } catch (error) {
+        console.error("Failed to fetch if the trip is compensated:", error);
+      }
+    }
+
+    if (!trip) return;
+    fetchIsCompensated();
+  }, [trip]);
 
   const fetchProof = async () => {
     console.log("fetch");
@@ -89,6 +115,16 @@ export default function TripDetailsPage() {
     }
   };
 
+  const handleClick = async () => {
+    if (isCompensated) {
+      fetchProof();
+    } else {
+      if (localStorage.getItem("userId")) {
+        fetchSuggestions();
+      }
+    }
+  };
+
   if (loading) return <CircularProgress />;
   if (!trip) return <Typography>Trip not found</Typography>;
 
@@ -105,20 +141,30 @@ export default function TripDetailsPage() {
       )}
       <Box sx={{ height: 50 }} />{" "}
       <Grid container spacing={3}>
-        <Grid
-          item
-          xs={12}
-          component="div"
-          {...({} as GridProps)}
-          //   padding={"15px"}
-        >
-          <TripCard
-            onProofClick={() => fetchProof()}
-            onSuggestionsClick={() => fetchSuggestions()}
-            {...trip}
-          />
+        <Grid item xs={12} component="div" {...({} as GridProps)}>
+          <TripCard {...trip} />
         </Grid>
       </Grid>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        {/* {isUserLogged && (
+          <Button variant="contained" onClick={() => handleClick()}>
+            {isCompensated
+              ? `Show Proof of Compensation`
+              : `See Compensation Suggestions`}
+          </Button>
+        )} */}
+        {isCompensated ? (
+          <Button variant="contained" onClick={() => handleClick()}>
+            Show Proof of Compensation
+          </Button>
+        ) : (
+          isUserLogged && (
+            <Button variant="contained" onClick={() => handleClick()}>
+              See Compensation Suggestions
+            </Button>
+          )
+        )}
+      </Box>
       {proof && (
         <ProofModal
           open={openProofModal}

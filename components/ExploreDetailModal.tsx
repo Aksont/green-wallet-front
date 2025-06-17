@@ -69,12 +69,12 @@ export default function ExploreDetailModal({
             <Typography variant="body1" gutterBottom>
               <strong>Cause:</strong> {card.cause}
             </Typography>
-            <Typography variant="body1" gutterBottom>
+            {/* <Typography variant="body1" gutterBottom>
               <strong>Distance:</strong> {card.distance} km
             </Typography>
             <Typography variant="body1" gutterBottom>
               <strong>Participation:</strong> {card.participation}
-            </Typography>
+            </Typography> */}
 
             {card.description && (
               <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>

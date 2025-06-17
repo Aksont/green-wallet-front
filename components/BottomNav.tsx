@@ -5,7 +5,10 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
+  Button,
+  Link,
   Paper,
+  Typography,
 } from "@mui/material";
 // import SchoolIcon from "@mui/icons-material/School";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -13,12 +16,23 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import PersonIcon from "@mui/icons-material/Person";
 // import StorefrontIcon from "@mui/icons-material/Storefront";
 import { useState, useEffect } from "react";
+import { isLogged } from "@/utils/auth";
 
 const BottomNav = () => {
+  const [isUserLogged, setIsUserLogged] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const loggedIn = await isLogged();
+      setIsUserLogged(loggedIn);
+    };
+
+    checkLogin();
+  }, []);
 
   useEffect(() => {
     if (pathname?.startsWith("/profile")) setValue(2);
@@ -42,6 +56,39 @@ const BottomNav = () => {
     // { label: "Market", icon: <StorefrontIcon /> },
     { label: "Profile", icon: <PersonIcon /> },
   ];
+
+  if (!isUserLogged) {
+    return (
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          bgcolor: "primary.paper",
+          color: "white",
+          px: 3,
+          py: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          zIndex: 1200, // stay above other content
+        }}
+      >
+        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+          Still not a Green Traveler? Join now and start making a difference!
+        </Typography>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ ml: 2 }}
+          component={Link}
+          href="/auth"
+        >
+          Join
+        </Button>
+      </Box>
+    );
+  }
 
   return (
     <Box

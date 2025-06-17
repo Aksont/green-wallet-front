@@ -43,8 +43,6 @@ interface TripCardProps {
   returnSequences?: Sequence[];
   totalDistanceInKm: number;
   totalCo2emissionInKg: number;
-  onProofClick?: () => void;
-  onSuggestionsClick?: () => void;
 }
 
 export interface Trip {
@@ -86,16 +84,9 @@ export default function TripCard({
   sequences,
   returnSequences,
   id,
-  onProofClick,
-  onSuggestionsClick,
 }: TripCardProps) {
   const [expanded, setExpanded] = useState(false);
-  // const [proof, setProof] = useState(null);
   const [isCompensated, setIsCompensated] = useState(false);
-  // const [suggestions, setSuggestions] = useState(null);
-
-  // const [openProofModal, setOpenProofModal] = useState(false);
-  // const [openSuggestionsModal, setOpenSuggestionsModal] = useState(false);
 
   useEffect(() => {
     async function fetchIsCompensated(id: string) {
@@ -111,42 +102,6 @@ export default function TripCard({
 
     fetchIsCompensated(id);
   }, []);
-
-  // const fetchProof = async (id: string) => {
-  //   if (proof) return;
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/proofs/${id}`
-  //     );
-  //     setProof(res.data);
-  //     console.log(res.data);
-  //   } catch (error) {
-  //     console.error(`Failed to fetch the proof for trip[${id}]:`, error);
-  //   }
-  // };
-
-  // const fetchSuggestions = async (id: string) => {
-  //   if (suggestions) return;
-  //   try {
-  //     const res = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/suggestions/${id}`
-  //     );
-  //     setProof(res.data);
-  //     console.log(res.data);
-  //   } catch (error) {
-  //     console.error(`Failed to fetch the proof for trip[${id}]:`, error);
-  //   }
-  // };
-
-  const handleClickCompensation = async () => {
-    if (isCompensated) {
-      onProofClick?.();
-    } else {
-      if (localStorage.getItem("userId")) {
-        onSuggestionsClick?.();
-      }
-    }
-  };
 
   const transportIcons: Record<string, JSX.Element> = {
     WALK: <DirectionsWalkIcon fontSize="small" />,
@@ -189,35 +144,33 @@ export default function TripCard({
         >
           <Typography variant="h6">{title}</Typography>
         </Link>
-        <Chip
-          label={
-            returnSequences && returnSequences.length > 0
-              ? "Return trip"
-              : "One-way"
-          }
-          size="small"
-          sx={{ fontWeight: 600 }}
-        />
-        <Tooltip
-          title={
-            isCompensated
-              ? "Trip has been compensated"
-              : "Waiting to be compensated"
-          }
-          enterTouchDelay={0}
-        >
-          <Box
-            component="span"
-            sx={{ cursor: "pointer" }}
-            onClick={() => handleClickCompensation()}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Chip
+            label={
+              returnSequences && returnSequences.length > 0
+                ? "Return trip"
+                : "One-way"
+            }
+            size="small"
+            sx={{ fontWeight: 600 }}
+          />
+          <Tooltip
+            title={
+              isCompensated
+                ? "Trip has been compensated"
+                : "Waiting to be compensated"
+            }
+            enterTouchDelay={0}
           >
-            {isCompensated ? (
-              <CompostIcon color="success" />
-            ) : (
-              <ReportIcon color="warning" />
-            )}
-          </Box>
-        </Tooltip>
+            <Box component="span" sx={{ cursor: "pointer" }}>
+              {isCompensated ? (
+                <CompostIcon color="success" />
+              ) : (
+                <ReportIcon color="warning" />
+              )}
+            </Box>
+          </Tooltip>
+        </Box>
       </Box>
 
       <Typography variant="body2" color="text.secondary">
@@ -292,15 +245,6 @@ export default function TripCard({
           ))}
         </Box>
       </Collapse>
-      {/* {proof && (
-        <ProofModal
-          open={openProofModal}
-          onClose={() => setOpenProofModal(false)}
-          proof={proof}
-          userProfileImgUrl={"/profile.png"}
-          tripName={"."}
-        />
-      )} */}
     </Paper>
   );
 }

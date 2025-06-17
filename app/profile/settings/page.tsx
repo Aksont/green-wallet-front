@@ -6,16 +6,13 @@ import ThemeModeSwitch from "@/components/ThemeModeSwitch";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Link from "next/link";
 import { requireAuth } from "@/utils/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function SettingsPage() {
   const { mode, toggleMode } = useThemeContext();
-  const [userId, setUserId] = useState<string>();
 
   useEffect(() => {
     requireAuth();
-    const userId = localStorage.getItem("userId");
-    setUserId(userId ? userId : "");
   }, []);
 
   return (
@@ -40,9 +37,9 @@ export default function SettingsPage() {
       </Button>
 
       <Box sx={{ mt: 8 }}>
-        <Typography variant="h4" gutterBottom>
+        {/* <Typography variant="h4" gutterBottom>
           Settings for User ID: {userId}
-        </Typography>
+        </Typography> */}
         <Typography variant="body1" gutterBottom>
           Current theme: <strong>{mode}</strong>
         </Typography>
