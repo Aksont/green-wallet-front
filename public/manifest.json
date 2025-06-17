@@ -21,13 +21,13 @@
   "screenshots": [
     {
       "src": "/screenshots/dashboard.png",
-      "sizes": "572x1250",
+      "sizes": "558x1214",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
       "src": "/screenshots/explore.png",
-      "sizes": "572x1250",
+      "sizes": "558x1214",
       "type": "image/png"
     }
   ]
