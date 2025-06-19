@@ -33,7 +33,7 @@ export interface ProofOfCompensation {
   trees: number;
   volunteerHours: number;
   comment: string;
-  status: "PENDING" | "APPROVED" | "DECLINED" | "ACTION_NEEDED"; // Adjust if you have an enum
+  status: "PENDING" | "APPROVED" | "DECLINED" | "ACTION_NEEDED" | "CLAIMED"; // Adjust if you have an enum
 }
 
 export interface UserResponse {
@@ -63,6 +63,7 @@ export default function UserProfilePage() {
     { label: string; value: number | string }[]
   >([]);
   const [proofsTrips, setProofsTrips] = useState<Trip[]>([]);
+  const [userWallet, setUserWallet] = useState<string>();
 
   useEffect(() => {
     requireAuth();
@@ -100,6 +101,56 @@ export default function UserProfilePage() {
     ];
 
     setStats(_stats);
+  }
+
+  async function getUserWalletAddress(): Promise<string | null> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { ethereum } = window as any;
+
+    if (!ethereum) {
+      alert("MetaMask is not installed");
+      return null;
+    }
+
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      return accounts[0];
+    } catch (err) {
+      console.error("Error getting wallet address:", err);
+      return null;
+    }
+  }
+
+  async function handleClaim(tripId: string) {
+    let walletAddress;
+    if (!userWallet) {
+      walletAddress = await getUserWalletAddress();
+      if (!walletAddress) return;
+      setUserWallet(walletAddress);
+    } else {
+      walletAddress = userWallet;
+    }
+    try {
+      console.log(tripId);
+      if (walletAddress) {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/compensation/claim`,
+          {
+            tripId,
+            userAddress: walletAddress,
+          }
+        );
+      }
+      alert("Claim successful!");
+      setProofs((prev) =>
+        prev.map((p) => (p.tripId === tripId ? { ...p, status: "CLAIMED" } : p))
+      );
+    } catch (err) {
+      console.error("Claim failed:", err);
+      alert("Claim failed.");
+    }
   }
 
   useEffect(() => {
@@ -309,9 +360,27 @@ export default function UserProfilePage() {
                   >
                     💬 {proof.comment}
                   </Typography>
-                  <Typography variant="caption" color="primary">
-                    Status: {proof.status}
-                  </Typography>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}
+                  >
+                    {proof.status === "CLAIMED" ? (
+                      <Typography
+                        variant="caption"
+                        sx={{ color: "success.main", fontWeight: 600 }}
+                      >
+                        Claimed
+                      </Typography>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => handleClaim(proof.tripId)}
+                      >
+                        Claim
+                      </Button>
+                    )}
+                  </Box>
+
                   {idx < proofs.length - 1 && <Divider sx={{ mt: 2, mb: 2 }} />}
                 </Box>
               ))

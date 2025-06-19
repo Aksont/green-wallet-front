@@ -23,6 +23,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import CompostIcon from "@mui/icons-material/Compost";
 import axios from "axios";
 import NextLink from "next/link";
+import ParkIcon from "@mui/icons-material/Park";
 
 // interface Segment {
 //   from: string;
@@ -179,14 +180,23 @@ export default function TripCard({
       </Typography>
 
       <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
           {sequences.length + (returnSequences?.length ?? 0)} segments
-        </Typography>
+        </Typography> */}
         <Typography variant="body2" color="text.secondary">
           {totalDistanceInKm.toFixed(1)} km
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {totalCo2emissionInKg.toFixed(1)} kg CO₂
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <ParkIcon fontSize="small" sx={{ ml: 0.5 }} />
+
+          {(totalCo2emissionInKg / 225).toFixed(1)}
         </Typography>
       </Box>
 
